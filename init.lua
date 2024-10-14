@@ -318,8 +318,9 @@ require('lazy').setup({
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
-        { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
+        { '<leader>e', group = '[E]xplore' },
+        { '<leader>w', group = '[W]orkspace' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
@@ -880,6 +881,29 @@ require('lazy').setup({
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
+      require('mini.files').setup {
+        mappings = {
+          close = '<ESC>',
+          go_in = '<CR>',
+          go_out = '-',
+        },
+        windows = {
+          preview = true,
+          border = 'solid',
+          width_preview = 80,
+        },
+      }
+
+      -- Fresh explorer in current working directory
+      vim.keymap.set('n', '<leader>ew', '<cmd>lua MiniFiles.open(nil, false)<CR>', { desc = '[E]xplore [W]orkspace', silent = true })
+
+      -- Fresh explorer in directory of current file
+      vim.keymap.set(
+        'n',
+        '<leader>ef',
+        '<cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0), false)<CR>',
+        { desc = '[E]xplore [F]ile Directory', silent = true }
+      )
     end,
   },
   { -- Highlight, edit, and navigate code
